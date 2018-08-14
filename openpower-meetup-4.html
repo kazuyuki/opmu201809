@@ -1,0 +1,308 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="shift-jis" />
+
+    <title>The landscape of OpenPOWER from software guy | by Miyamoto Kazuyuki @NEC</title>
+
+    <meta name="description" content="What is a good purpose for write code running on OpenPOWER?" />
+    <meta name="author" content="Miyamoto Kazuyuki" />
+    <!--
+    <link rel="stylesheet" href="extras/highlight/styles/github.css" />
+    <link rel="stylesheet" href="examples/markdown/css/markdown-slides.css" />
+-->
+        <link rel="stylesheet" href="js/mermaid.forest.css" />
+        <link rel="stylesheet" href="js/markdown-slides.css" />
+<!--
+    <link href="examples/markdown/css/devopsy.css" rel="stylesheet" />
+    <link href="examples/markdown/css/effects.css" rel="stylesheet" />
+-->
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress" data-transition-duration="1000">
+
+<div id="Get_started" class="step slide markdown" data-rel-x="0" data-rel-y="900">
+
+## NEC の OpenPOWER への取り組み
+
+##### 基盤ソフト屋から見える OpenPOWER 界隈の風景
+
+-----
+
+## working for HA clustering software
+
+EXPRESSCLUSTER ( CLUSTERPRO 1996~ )
+
+-----
+
+# Computer Cluster
+
+- HPC
+  - VAXcluster VMScluster
+ - Beowulf, Oscar, MPI, SCore
+
+- High Availability
+	- Tandem Himaraya
+	- IBM S/390 Parallel Sysplex
+-----
+# HA Cluster
+
+- Lord Balance
+  - ipvsadm, lvs
+
+- Failover
+  - Hot standby
+    - Stratus everRun, - VMware FT
+  - Cold standby
+    - Micro Focus   PlateSpin
+  - **Warm standby**
+
+-----
+
+## HA Cluster Software for commercial
+
+- UNIX
+  - IBM     PowerHA (HACMP)
+  - HP      Serviceguard
+  - Oracle  Solaris Cluster
+
+- IA
+  - Veritas Cluster Server
+  - Microsoft WSFC
+  - NEC   **CLUSTERRPO**
+  - SIOS  LifeKeeper
+
+-----
+
+## Configuration types of HA Cluster
+
+![Shared disk type](https://jpn.nec.com/clusterpro/clp/img/function_6.png)
+
+-----
+
+## Configuration types of HA Cluster
+
+![block device replication type](https://jpn.nec.com/clusterpro/clp/img/function_7.png)
+
+</div>
+
+<div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="10">
+        <h2> Configuration types of CLUSTERRPO </h2>
+        <div class="mermaid">
+                graph TD
+                subgraph Data Mirror
+                subgraph Source
+                Node-C --- MD-C((HDD-C))
+                end
+                subgraph Target
+                Node-D --- MD-D((HDD-D))
+                end
+                end
+
+                subgraph Shared Disk
+                Node-A --- SD((Shared-Disk))
+                Node-B --- SD
+                end
+        </div>
+</div>
+<div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="20">
+        <h2> Configuration types of CLUSTERRPO </h2>
+        <div class="mermaid">
+                graph TD
+
+                subgraph Hybrid
+                subgraph Production Site
+                Node-E --- HD-1((Shared Disk))
+                Node-F --- HD-1((Shared Disk))
+                end
+                subgraph DR Site
+                Node-G --- HD-2((Shared Disk))
+                end
+                end
+        </div>
+        powered by mermaid.js
+</div>
+
+<div class="step slide markdown" data-rel-x="0" data-rel-y="900">
+## How I involved with **OpenPOWER**
+
+Platform expantion movement around 2007-2008 up on code base for Linux
+
+-----
+
+#### HP
+
+Existing MC/Service Guard
+
+[foo hoge bar](まじでやるの?)
+-----
+
+#### Sun (Oracle)
+
+Existing Sun Cluster
+
+- pros : 政治的な問題が無い。[foo hoge bar](SIに要認定技術者で複雑)
+- cons : Machine neck for dev
+- 2008.05  OpenSolaris initial release
+- 2010.08.13 「OpenSolais is officially now dead.」事件
+- resl : CLUSTERPRO X for Solaris (x86)
+-----
+
+#### IBM
+
+Existing PowerHA
+
+- 政治的な問題が無い
+- IBM の協力があり machine neck も無かった
+
+Porting CLUSTERPRO for Linux to *PowerLinux*
+
+(CLUSTERPRO for *Linux on z*)
+
+- resl : CLUSTERPRO X for Linux
+-----
+
+# ExpEther
+
+![ExpEther](http://www.expether.org/images/ee_basic.png?crc=309300388)
+
+-----
+
+
+-----
+
+# in the Xbox
+
+- NVMe SSD
+- GPU card
+
+-----
+
+# Problem on ExpEther guy
+
+SPoF
+
+![SPoF](http://expether.org/images/multihost.png?crc=4252991000)
+
+-----
+
+## Approach from HA Cluster
+
+
+### NVMe SSD in I/O Box as Shared Storage
+
+-----
+## Approach from HA Cluster
+
+
+### GPU in I/O BOX for use of "GPU VM w/ HA"
+
+-----
+
+# Usage of OpenPOWER
+- HPC
+- AI
+
+-----
+
+# What's inside
+- GPU, NVLink
+- OpenCAPI
+- PCI Gen4
+
+:
+
+- wide band / low latency
+- more CPU cores
+
+-----
+
+# Semantics
+
+IAとコスト勝負はせず、
+performance, scalability だけが意味のある領域で勝負
+
+捨てられているもの
+
+  Tribial
+   DBMS
+   File Server
+
+  Small Medium Business、General/Enterprise Business は捨て
+
+# Usage
+- Erasure coding
+- Parallel execution
+
+-----
+
+The world of Peripheral Device guys
+
+-----
+
+# Reality around OpenPOWER
+
+The use of HPC / AI dominates
+
+- No business for software vendor in old school
+
+No customer needs for HA
+
+- No general/business use in enterprise
+- SAP HANA might be the exception
+
+-----
+
+# An idea comes up
+
+GPU computing power as a service
+
+  amazon, MS, IBM, Oracle, Fujitsu
+
+ASMP. これらの人々とこれらを真似ようとする人々ってエンタープライズ系の臭いがする
+
+GPU as failover subject
+
+  - Failover of GPU in ExpEhter I/O Box
+  - GPU Hotplug is the matter
+    - eGPU
+    - Driver support
+
+-----
+
+# Again where my customer?
+
+-----
+
+# Struggle on to something fun
+
+finding use case in area of
+- HPC
+- GPU
+
+</div>
+
+<div id="overview" class="step" data-x="5000" data-y="4000" data-scale="10" style="pointer-events: none;" data-rotate="5">
+</div>
+
+</div>
+
+<div id="impress-toolbar"></div>
+<div id="impress-help"></div>
+
+<!--
+<script type="text/javascript" src="extras/highlight/highlight.pack.js"></script>
+-->
+<script type="text/javascript" src="js/markdown.js"></script>
+<script type="text/javascript" src="js/mermaid.min.js"></script>
+<script type="text/javascript" src="js/impress.js"></script>
+<script>impress().init();</script>
+</body>
+</html>
