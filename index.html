@@ -28,7 +28,7 @@
 
 <div id="impress" data-transition-duration="1000">
 
-<div id="Get_started" class="step slide markdown" data-rel-x="0" data-rel-y="900">
+<div id="Get_started" class="step slide markdown" data-rel-x="1200" data-rel-y="0">
 
 ## NEC の OpenPOWER への取り組み
 
@@ -46,12 +46,13 @@ EXPRESSCLUSTER ( CLUSTERPRO 1996~ )
 
 - HPC
   - VAXcluster VMScluster
- - Beowulf, Oscar, MPI, SCore
+  - Beowulf, Oscar, MPI, SCore
+- HA
+  - Tandem Himaraya
+  - IBM S/390 Parallel Sysplex
 
-- High Availability
-	- Tandem Himaraya
-	- IBM S/390 Parallel Sysplex
 -----
+
 # HA Cluster
 
 - Lord Balance
@@ -67,17 +68,15 @@ EXPRESSCLUSTER ( CLUSTERPRO 1996~ )
 -----
 
 ## HA Cluster Software for commercial
-
 - UNIX
   - IBM     PowerHA (HACMP)
   - HP      Serviceguard
   - Oracle  Solaris Cluster
-
 - IA
   - Veritas Cluster Server
   - Microsoft WSFC
-  - NEC   **CLUSTERRPO**
   - SIOS  LifeKeeper
+  - NEC   CLUSTERRPO
 
 -----
 
@@ -91,24 +90,30 @@ EXPRESSCLUSTER ( CLUSTERPRO 1996~ )
 
 ![block device replication type](https://jpn.nec.com/clusterpro/clp/img/function_7.png)
 
-</div>
+-----
 
+## Configuration types of HA Cluster
+
+![block device replication type](https://jpn.nec.com/clusterpro/clp/img/function_10.png)
+
+<!--
+</div>
 <div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="10">
         <h2> Configuration types of CLUSTERRPO </h2>
         <div class="mermaid">
                 graph TD
                 subgraph Data Mirror
-                subgraph Source
-                Node-C --- MD-C((HDD-C))
-                end
-                subgraph Target
-                Node-D --- MD-D((HDD-D))
-                end
+                        subgraph Source
+                                Node-C --- MD-C((HDD-C))
+                        end
+                        subgraph Target
+                                Node-D --- MD-D((HDD-D))
+                        end
                 end
 
                 subgraph Shared Disk
-                Node-A --- SD((Shared-Disk))
-                Node-B --- SD
+                        Node-A --- SD((Shared-Disk))
+                        Node-B --- SD
                 end
         </div>
 </div>
@@ -116,24 +121,26 @@ EXPRESSCLUSTER ( CLUSTERPRO 1996~ )
         <h2> Configuration types of CLUSTERRPO </h2>
         <div class="mermaid">
                 graph TD
-
                 subgraph Hybrid
-                subgraph Production Site
-                Node-E --- HD-1((Shared Disk))
-                Node-F --- HD-1((Shared Disk))
-                end
-                subgraph DR Site
-                Node-G --- HD-2((Shared Disk))
-                end
+                        subgraph Production Site
+                                Node-E --- HD-1((Shared Disk))
+                                Node-F --- HD-1((Shared Disk))
+                        end
+                        subgraph DR Site
+                                Node-G --- HD-2((Shared Disk))
+                        end
                 end
         </div>
-        powered by mermaid.js
+        <font size="3">powered by mermaid.js</font>
 </div>
-
 <div class="step slide markdown" data-rel-x="0" data-rel-y="900">
-## How I involved with **OpenPOWER**
+-->
 
-Platform expantion movement around 2007-2008 up on code base for Linux
+-----
+
+## How I involved with **POWER**
+
+Around **2007-2008**, platform expansion movement upon codebase of CLUSTERPRO for Linux
 
 -----
 
@@ -141,80 +148,131 @@ Platform expantion movement around 2007-2008 up on code base for Linux
 
 Existing MC/Service Guard
 
-[foo hoge bar](まじでやるの?)
+- con : [foo hoge bar](まじでやるの?)
+
 -----
 
 #### Sun (Oracle)
 
 Existing Sun Cluster
 
-- pros : 政治的な問題が無い。[foo hoge bar](SIに要認定技術者で複雑)
-- cons : Machine neck for dev
-- 2008.05  OpenSolaris initial release
-- 2010.08.13 「OpenSolais is officially now dead.」事件
-- resl : CLUSTERPRO X for Solaris (x86)
+- pro : 政治的な問題が無い。[foo hoge bar](SIに要認定技術者で複雑)
+- con : Machine neck for sparc dev
+- pro : 2008.05  OpenSolaris initial release
+- con : 2010.08.13 「OpenSolais is officially now dead.」事件
+
+resl : CLUSTERPRO X for Solaris (x86)
 -----
 
 #### IBM
 
 Existing PowerHA
 
-- 政治的な問題が無い
-- IBM の協力があり machine neck も無かった
+- pro: 政治的な問題が無い
+- pro: IBM の協力があり machine neck も無かった
 
-Porting CLUSTERPRO for Linux to *PowerLinux*
+resl : CLUSTERPRO for *Linux on POWER*
 
-(CLUSTERPRO for *Linux on z*)
+  - (CLUSTERPRO for *Linux on z*)
 
-- resl : CLUSTERPRO X for Linux
 -----
 
-# ExpEther
+## How I involved with **OpenPOWER**
+
+### ExpEther started 2012
 
 ![ExpEther](http://www.expether.org/images/ee_basic.png?crc=309300388)
 
 -----
 
-
------
-
-# in the Xbox
-
-- NVMe SSD
-- GPU card
-
------
-
-# Problem on ExpEther guy
+# Problem on ExpEther guy on 2014
 
 SPoF
 
 ![SPoF](http://expether.org/images/multihost.png?crc=4252991000)
 
------
+</div>
+<div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="20">
+        <h2> solution </h2>
+        <div class="mermaid">
+                graph TD
+                subgraph CLP
+                        EEM1(EEM<br>active)
+                end
+                subgraph CLP
+                        EEM2(EEM<br>standby)
+                end
+                subgraph Xbox
+                        NVMe
+                end
+                SW[40G SW]
+                style EEM2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5
 
-## Approach from HA Cluster
+                EEM1 --- SW
+                EEM2 --- SW
+                Other[Other Servers] --- SW
+                SW --- NVMe
+        </div>
+</div>
+<div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="20">
+        <h2> solution </h2>
+        <div class="mermaid">
+                graph TD
+                subgraph CLP
+                        EEM1(EEM<br>active)
+                end
+                subgraph CLP
+                        EEM2(EEM<br>standby)
+                end
+                subgraph Xbox
+                        NVMe
+                end
+                %%Other[Other Servers]
+                SW1[40G SW]
+                SW2[40G SW]
 
+                style EEM2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5
 
-### NVMe SSD in I/O Box as Shared Storage
+                EEM1 --- SW1
+                EEM2 --- SW1
+                EEM1 --- SW2
+                EEM2 --- SW2
+                %%Other --- SW1
+                %%Other --- SW2
+                SW1 --- NVMe
+                SW2 --- NVMe
+        </div>
+        <font size="3">powered by mermaid.js</font>
+</div>
 
------
-## Approach from HA Cluster
+<div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="20">
+        <h2> Approach by HA Cluster</h2>
+        <ul>
+                <li> NVMe SSD in Xbox as Shared Storage
+                <li> GPU in Xbox for use of "GPU VM w/ HA"
+        </ul>
+        <div class="mermaid">
+                graph TD
 
+                subgraph Xbox
+                        NVM((NVMe SSD))
+                        GPU1(GPU Card)
+                        GPU2(GPU Card)
+                end
 
-### GPU in I/O BOX for use of "GPU VM w/ HA"
+                Node-E --- NVM
+                Node-F --- NVM
+                Node-G --- GPU1
+                %% Node-G --- GPU2
+                Node-H --- GPU1
+                %% Node-H --- GPU2
+        </div>
+</div>
+<div class="step slide markdown" data-rel-x="1200" data-rel-y="0">
 
------
-
-# Usage of OpenPOWER
-- HPC
-- AI
-
------
-
-# What's inside
+# Nats in the box
 - GPU, NVLink
-- OpenCAPI
+- CAPI
 - PCI Gen4
 
 :
@@ -224,76 +282,72 @@ SPoF
 
 -----
 
-# Semantics
-
-IAとコスト勝負はせず、
-performance, scalability だけが意味のある領域で勝負
-
-捨てられているもの
-
-  Tribial
-   DBMS
-   File Server
-
-  Small Medium Business、General/Enterprise Business は捨て
-
-# Usage
-- Erasure coding
-- Parallel execution
+# OpenPOWER in a nutshell
+- HPC
+- AI
 
 -----
 
-The world of Peripheral Device guys
+# 今捨てられているモノ
+- Personal
+- General business (System of Record ?)
+  - Traditional enterprise (DBS, APS, FS)
+    - *SAP HANA* might be the exception
+
+- Linux 以外の選択肢
+
+- IA とのコスト勝負?
 
 -----
 
-# Reality around OpenPOWER
-
-The use of HPC / AI dominates
-
-- No business for software vendor in old school
-
-No customer needs for HA
-
-- No general/business use in enterprise
-- SAP HANA might be the exception
+# 今拾われているモノ
+- performance, scalability だけが意味のある領域
+  - Learning phase of DL
+  - (Erasure coding ?)
+- Google が OP を使っているとはいえ、Gを客とした商売が成立する余地は少ないように思われやすい
+  - 「HW, OS, APP, Algo 必要なものは自家発電しそう」
 
 -----
 
-# An idea comes up
+# Reality
+
+## The world of Peripheral Device guys
+
+## The world of HPC
+
+-----
+
+## An idea came up along w/ new movement
 
 GPU computing power as a service
 
-  amazon, MS, IBM, Oracle, Fujitsu
+- amazon, MS, IBM, Oracle, Fujitsu ...
 
-ASMP. これらの人々とこれらを真似ようとする人々ってエンタープライズ系の臭いがする
+GPU, an asset to be protected
 
-GPU as failover subject
-
-  - Failover of GPU in ExpEhter I/O Box
+- Failover of GPU in Xbox
   - GPU Hotplug is the matter
-    - eGPU
     - Driver support
+    - eGPU
 
 -----
 
-# Again where my customer?
+## Funny some, where is ?
 
------
+### Finding playground in the areas of
 
-# Struggle on to something fun
+HPC, GPU computing
 
-finding use case in area of
-- HPC
-- GPU
+小 arm、中 xeon、大 POWER ???
+
+OPと関わる楽しいナニカ ???
+
+else ???
 
 </div>
-
 <div id="overview" class="step" data-x="5000" data-y="4000" data-scale="10" style="pointer-events: none;" data-rotate="5">
 </div>
-
 </div>
-
 <div id="impress-toolbar"></div>
 <div id="impress-help"></div>
 
