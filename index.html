@@ -163,6 +163,7 @@ Existing Sun Cluster
 - con : 2010.08.13 「OpenSolais is officially now dead.」事件
 
 resl : CLUSTERPRO X for Solaris (x86)
+
 -----
 
 #### IBM
@@ -174,26 +175,29 @@ Existing PowerHA
 
 resl : CLUSTERPRO for *Linux on POWER*
 
-  - (CLUSTERPRO for *Linux on z*)
+  (CLUSTERPRO for *Linux on z*)
 
 -----
 
 ## How I involved with **OpenPOWER**
 
-### ExpEther started 2012
+### ExpEther started in 2012
 
 ![ExpEther](http://www.expether.org/images/ee_basic.png?crc=309300388)
 
 -----
 
-# Problem on ExpEther guy on 2014
+## Problem on ExpEther guy on 2014
 
 SPoF
 
 ![SPoF](http://expether.org/images/multihost.png?crc=4252991000)
 
 </div>
+<!--
 <div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="20">
+-->
+<div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="0">
         <h2> solution </h2>
         <div class="mermaid">
                 graph TD
@@ -215,7 +219,10 @@ SPoF
                 SW --- NVMe
         </div>
 </div>
+<!--
 <div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="20">
+-->
+<div class="step slide" data-rel-x="0" data-rel-y="1000" data-rotate="0">
         <h2> solution </h2>
         <div class="mermaid">
                 graph TD
@@ -246,8 +253,8 @@ SPoF
         <font size="3">powered by mermaid.js</font>
 </div>
 
-<div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="20">
-        <h2> Approach by HA Cluster</h2>
+<div class="step slide" data-rel-x="0" data-rel-y="900" data-rotate="0">
+        <h2>Approach by HA Cluster</h2>
         <ul>
                 <li> NVMe SSD in Xbox as Shared Storage
                 <li> GPU in Xbox for use of "GPU VM w/ HA"
@@ -271,56 +278,41 @@ SPoF
 </div>
 <div class="step slide markdown" data-rel-x="1200" data-rel-y="0">
 
-# Nats in the box
-- GPU, NVLink
-- CAPI
-- PCI Gen4
+# Reality of the OP world
+### 狙っている (と表明されている) モノ
 
-:
-
-- wide band / low latency
-- more CPU cores
-
------
-
-# OpenPOWER in a nutshell
-- HPC
-- AI
+- High Performance Conputing
+- Distributed Conputing (AI)
+    - GPU, NVLink
+    - CAPI, PCIe Gen4
+        - Peripheral Device
+        - ODM屋 は嬉しい ?
 
 -----
 
-## 今 眼中に無い (ように見える) モノ
-- Personal
-- General business (System of Record ?)
-  - Traditional enterprise (DBS, APS, FS)
-    - *SAP HANA* might be the exception
-- Linux 以外の選択肢
-- IA とのコスト勝負?
+## Who use How
 
------
-
-## 今 狙っている (ように見える) モノ
-
-- 分散システム
-  - Google, Tencent社が OpenPOWER を使っている
-    - G社 相手に客商売 ?
+- High Performance Conputing
+  - Univ, Manufacturing, Drug discovery ...
+- Distributed Conputing
+  - OpenPOWER のメジャーユーザーって Google, Tencent ?
       - 必要な HW, OS, APP, Algo を自作しそう
-      - ODM屋 は嬉しい ?
-  - Learning phase of DL
+- Deep Learning
     - performance, scalability だけが意味のある領域
       - Erasure coding ?
 - Density (threads per socket) が意味を持つ領域 ?
 
 -----
 
-## Reality
-
-### The world of
-
-# HPC
-
-# Peripheral Device
-
+## Reality of the OP world
+### 眼中に無い (ように見える) モノ
+- Personal
+  - Arm との勝負 ?
+- Line of Business
+  - Traditional enterprise (DBMS, APS, FS, Batch)
+    - *SAP HANA* might be the exception
+  - IA との勝負?
+- Linux 以外の選択肢
 
 -----
 
@@ -347,9 +339,11 @@ HPC, GPU computing
 
 小 ARM、中 Xeon、大 POWER ???
 
-OPと関わる楽しいナニカ ???
+OPに関わる楽しいナニカ ???
 
 else ???
+
+
 
 </div>
 <div id="overview" class="step" data-x="5000" data-y="4000" data-scale="10" style="pointer-events: none;" data-rotate="5">
